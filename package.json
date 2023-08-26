@@ -1,0 +1,19 @@
+{
+  "name": "pcc",
+  "version": "0.1.0",
+  "description": "University project",
+  "main": "index.js",
+  "repository": "https://github.com/liquidiert/pcc.git",
+  "author": "liquidiert <haberederkorbinian@googlemail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch",
+    "release:major": "standard-version --release-as major"
+  },
+  "devDependencies": {
+    "standard-version": "^9.5.0"
+  }
+}
