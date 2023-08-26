@@ -6,12 +6,12 @@ from kivymd.uix.navigationrail import (
 )
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.screenmanager import MDScreenManager
-from kivymd.uix.fitimage import FitImage
 
 from screens.clients import ClientScreen
 from screens.relations import RelationsScreen
-from screens.mail import MailScreen
-from screens.settings import SettingsScreen
+from screens.add_relations import AddRelationsScreen
+from screens.documents import DocumentsScreen
+from screens.dates import DatesScreen
 
 from kivy.core.window import Window
 Window.size = (1000, 750)
@@ -19,16 +19,15 @@ Window.size = (1000, 750)
 import objectbox
 from objectbox_handler import ob
 from models.client import Client
-
-from datetime import datetime
-
+from models.relation import Relation
 
 class PccApp(MDApp):
 
     client_screen = ClientScreen()
     relations_screen = RelationsScreen()
-    mail_screen = MailScreen()
-    settings_screen = SettingsScreen()
+    add_relations_screen = AddRelationsScreen()
+    documents_screen = DocumentsScreen()
+    dates_screen = DatesScreen()
 
     def build(self):
         self.theme_cls.material_style = "M3"
@@ -46,12 +45,12 @@ class PccApp(MDApp):
                         icon="account-multiple",
                     ),
                     MDNavigationRailItem(
-                        text="Mail",
-                        icon="email-outline",
+                        text="Documents",
+                        icon="file-document-multiple",
                     ),
                     MDNavigationRailItem(
-                        text="Settings",
-                        icon="cog-outline",
+                        text="Dates",
+                        icon="calendar-range",
                     ),
                     id="navigation_rail",
                     md_bg_color="#fffcf4",
@@ -59,10 +58,11 @@ class PccApp(MDApp):
                     ripple_color_item="#e7e4c0",
                 ),
                 MDScreenManager(
-                    self.client_screen.build(self.theme_cls, self.root),
+                    self.client_screen.build(self.theme_cls),
                     self.relations_screen.build(),
-                    self.mail_screen.build(),
-                    self.settings_screen.build(),
+                    self.add_relations_screen.build(self.theme_cls),
+                    self.documents_screen.build(),
+                    self.dates_screen.build(),
                     id="screen_manager_content",
                 ),
                 id="root_box",
@@ -88,20 +88,15 @@ class PccApp(MDApp):
             )
         )
 
+        r_box = objectbox.Box(ob, Relation)
+
+        r_box.remove_all()
+
+        self.relations_screen.init(self.root, self.add_relations_screen)
+        self.add_relations_screen.init(self.root)
+        self.documents_screen.init(self.root)
+
 if __name__=="__main__":
     client_box = objectbox.Box(ob, Client)
-
-    if len(client_box.get_all()) == 1:
-        c = Client()
-        c.firstname = "Korbi"
-        c.lastname = "Habi"
-        c.country = "Deutschland"
-        c.city = "Auerbach"
-        c.zip = "94530"
-        c.street = "Am Buchenhain"
-        c.number = "14"
-        c.birthdate = int(datetime.now().timestamp())
-        client_box.put(c)
-        client_box.put(c)
 
     PccApp().run()

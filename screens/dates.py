@@ -1,12 +1,8 @@
-import kivy
-
-kivy.require("2.2.1")
-
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.label import MDLabel
 
-class SettingsScreen:
+class DatesScreen:
 
     def build(self):
         return MDScreen(
@@ -21,5 +17,5 @@ class SettingsScreen:
                 pos_hint={"top": 1},
                 orientation="vertical"
             ),
-            name="settings",
+            name="dates",
         )

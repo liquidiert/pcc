@@ -10,7 +10,7 @@ from objectbox_handler import ob
 
 from store.current_client import CurrentClientStore
 
-class RelationsScreen:
+class DocumentsScreen:
 
     root = None
     client_box = objectbox.Box(ob, Client)
