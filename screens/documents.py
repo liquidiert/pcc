@@ -3,6 +3,7 @@ from kivymd.uix.screen import MDScreen
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.label import MDLabel
 from kivymd.uix.datatables import MDDataTable
+from kivymd.uix.button import MDFlatButton
 
 import objectbox
 from models.client import Client
@@ -15,11 +16,9 @@ class DocumentsScreen:
     root = None
     client_box = objectbox.Box(ob, Client)
     data_table = None
-    add_screen = None
 
-    def init(self, root, sub_screen):
+    def init(self, root):
         self.root = root
-        self.add_screen = sub_screen
 
     def build(self):
         self.clients: list[Client] = self.client_box.get_all()
@@ -45,7 +44,7 @@ class DocumentsScreen:
         return MDScreen(
             MDBoxLayout(
                 MDLabel(
-                    text="Relations",
+                    text="Documents",
                     font_style="H3"
                 ),
                 self.data_table,
@@ -53,11 +52,11 @@ class DocumentsScreen:
                 pos_hint={"top": 1},
                 spacing="12dp",
                 orientation="vertical",
-                id="relations_screen_box",
+                id="documents_screen_box",
             ),
-            name="relations",
+            name="documents",
         )
-    
+
     def on_client_click(self, _, instance_row):
         root_box = self.root.ids.root_box
         screen_manager_content = root_box.ids.screen_manager_content
@@ -66,7 +65,5 @@ class DocumentsScreen:
         client_id = int(instance_row.table.recycle_data[start_indx]["text"])
 
         CurrentClientStore.current_client = self.client_box.get(client_id)
-
-        self.add_screen.refresh()
 
         screen_manager_content.current = "add_relations"
