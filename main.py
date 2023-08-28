@@ -12,6 +12,7 @@ from screens.relations import RelationsScreen
 from screens.add_relations import AddRelationsScreen
 from screens.documents import DocumentsScreen
 from screens.dates import DatesScreen
+from screens.manage_dates import ManageDatesScreen
 
 from kivy.core.window import Window
 Window.size = (1000, 750)
@@ -19,7 +20,6 @@ Window.size = (1000, 750)
 import objectbox
 from objectbox_handler import ob
 from models.client import Client
-from models.relation import Relation
 
 class PccApp(MDApp):
 
@@ -28,10 +28,12 @@ class PccApp(MDApp):
     add_relations_screen = AddRelationsScreen()
     documents_screen = DocumentsScreen()
     dates_screen = DatesScreen()
+    manage_date_screen = ManageDatesScreen()
 
     def build(self):
         self.theme_cls.material_style = "M3"
         self.theme_cls.primary_palette = "Orange"
+        self.icon = "assets/pcc_icon.png"
 
         return MDScreen(
             MDBoxLayout(
@@ -63,6 +65,7 @@ class PccApp(MDApp):
                     self.add_relations_screen.build(self.theme_cls),
                     self.documents_screen.build(),
                     self.dates_screen.build(),
+                    self.manage_date_screen.build(),
                     id="screen_manager_content",
                 ),
                 id="root_box",
@@ -88,13 +91,11 @@ class PccApp(MDApp):
             )
         )
 
-        r_box = objectbox.Box(ob, Relation)
-
-        r_box.remove_all()
-
         self.relations_screen.init(self.root, self.add_relations_screen)
         self.add_relations_screen.init(self.root)
         self.documents_screen.init(self.root)
+        self.dates_screen.init(self.root)
+        self.manage_date_screen.init(self.root)
 
 if __name__=="__main__":
     client_box = objectbox.Box(ob, Client)
