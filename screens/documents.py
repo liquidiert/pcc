@@ -66,4 +66,4 @@ class DocumentsScreen:
 
         CurrentClientStore.current_client = self.client_box.get(client_id)
 
-        screen_manager_content.current = "add_relations"
+        screen_manager_content.current = "manage_documents"

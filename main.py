@@ -11,8 +11,9 @@ from screens.clients import ClientScreen
 from screens.relations import RelationsScreen
 from screens.add_relations import AddRelationsScreen
 from screens.documents import DocumentsScreen
-from screens.dates import DatesScreen
-from screens.manage_dates import ManageDatesScreen
+from screens.manage_documents import ManageDocumentsScreen
+from screens.events import EventsScreen
+from screens.manage_events import ManageEventsScreen
 
 from kivy.core.window import Window
 Window.size = (1000, 750)
@@ -27,8 +28,9 @@ class PccApp(MDApp):
     relations_screen = RelationsScreen()
     add_relations_screen = AddRelationsScreen()
     documents_screen = DocumentsScreen()
-    dates_screen = DatesScreen()
-    manage_date_screen = ManageDatesScreen()
+    manage_documents_screen = ManageDocumentsScreen()
+    dates_screen = EventsScreen()
+    manage_date_screen = ManageEventsScreen()
 
     def build(self):
         self.theme_cls.material_style = "M3"
@@ -64,6 +66,7 @@ class PccApp(MDApp):
                     self.relations_screen.build(),
                     self.add_relations_screen.build(self.theme_cls),
                     self.documents_screen.build(),
+                    self.manage_documents_screen.build(),
                     self.dates_screen.build(),
                     self.manage_date_screen.build(self.theme_cls),
                     id="screen_manager_content",
@@ -94,6 +97,7 @@ class PccApp(MDApp):
         self.relations_screen.init(self.root, self.add_relations_screen)
         self.add_relations_screen.init(self.root)
         self.documents_screen.init(self.root)
+        self.manage_documents_screen.init(self.root)
         self.dates_screen.init(self.root, self.manage_date_screen)
         self.manage_date_screen.init(self.root, self.dates_screen)
 

@@ -18,7 +18,7 @@ from store.current_date import CurrentDateStore
 
 from functools import partial
 
-class DatesScreen:
+class EventsScreen:
     layout = None
     current_date = datetime.now()
     root = None

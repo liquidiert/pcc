@@ -15,7 +15,7 @@ from store.current_date import CurrentDateStore
 
 from typing import Callable
 
-class ManageDatesScreen:
+class ManageEventsScreen:
 
     root = None
     data_table = None
@@ -241,4 +241,4 @@ class ManageDatesScreen:
     def go_back(self, _):
         root_box = self.root.ids.root_box
         screen_manager_content = root_box.ids.screen_manager_content
-        screen_manager_content.current = "dates"
+        screen_manager_content.current = "events"
