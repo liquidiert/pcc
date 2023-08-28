@@ -16,14 +16,18 @@ from objectbox_handler import ob
 
 from store.current_date import CurrentDateStore
 
+from functools import partial
+
 class DatesScreen:
     layout = None
     current_date = datetime.now()
     root = None
     dates_box = objectbox.Box(ob, Date)
+    manage_screen = None
 
-    def init(self, root):
+    def init(self, root, sub_screen):
         self.root = root
+        self.manage_screen = sub_screen
 
     def build(self):
         current_days = calendar.monthrange(self.current_date.year, self.current_date.month)
@@ -42,7 +46,7 @@ class DatesScreen:
 
         return MDScreen(
             MDBoxLayout(
-                MDLabel(text="Dates management", font_style="H3", adaptive_height=True),
+                MDLabel(text="Events management", font_style="H3", adaptive_height=True),
                 MDBoxLayout(
                     MDIconButton(
                         icon="chevron-left",
@@ -52,6 +56,7 @@ class DatesScreen:
                         text=f"{self.current_date.month}-{self.current_date.year}",
                         pos_hint={"y": .025},
                         adaptive_width=True,
+                        halign="center",
                         id="current_date_range"
                     ),
                     MDIconButton(
@@ -66,10 +71,20 @@ class DatesScreen:
                 pos_hint={"top": 1},
                 orientation="vertical",
                 spacing="12dp",
-                id="dates_box"
+                id="events_box"
             ),
-            name="dates",
+            name="events",
         )
+    
+    def refresh(self):
+        self.layout.clear_widgets()
+        
+        current_days = calendar.monthrange(self.current_date.year, self.current_date.month)
+
+        to_display = self.build_day_cards(current_days[1])
+
+        for day in to_display:
+            self.layout.add_widget(day)
     
     def build_day_cards(self, date_range: int):
 
@@ -77,22 +92,25 @@ class DatesScreen:
 
         to_display = []
         for x in range(1, date_range + 1):
+            event_count = len(list(filter(lambda e: e.date == f'{x}-{self.current_date.month}-{self.current_date.year}', events)))
+
             to_display.append(
                 MDCard(
                     MDRelativeLayout(
                         MDIconButton(
                             icon="dots-vertical",
                             pos_hint={"top": 1, "right": 1},
-                            on_press=self.on_day_click
+                            on_press=partial(self.on_day_click, x)
                         ),
                         MDLabel(
-                            text=str(x),
+                            text=f"{x}.",
                             adaptive_size=True,
                             padding=8,
                             pos_hint={"top": 1,"left": 0}
                         ),
                         MDLabel(
-                            text=f"{len(list(filter(lambda e: e.date == f'{self.current_date.month}-{self.current_date.year}', events)))} events",
+                            text=f"{event_count} events",
+                            theme_text_color="Primary" if event_count != 0 else "Hint",
                             pos_hint={"center_x": 0.7, "center_y": 0.3}
                         )
                     ),
@@ -105,8 +123,10 @@ class DatesScreen:
             )
         return to_display
 
-    def on_day_click(self, _):
-        CurrentDateStore().current_date = f"{self.current_date.month}-{self.current_date.year}"
+    def on_day_click(self, day, _):
+        CurrentDateStore.current_date = f"{day}-{self.current_date.month}-{self.current_date.year}"
+
+        self.manage_screen.refresh()
 
         root_box = self.root.ids.root_box
         screen_manager_content = root_box.ids.screen_manager_content

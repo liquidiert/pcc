@@ -174,6 +174,7 @@ class ClientScreen:
                     multiline=False,
                     helper_text="Is required!",
                     helper_text_mode="on_error",
+                    size_hint=(.3, None),
                     id="zip_field",
                 ),
                 MDTextField(
@@ -205,6 +206,7 @@ class ClientScreen:
                     multiline=False,
                     helper_text="Is required!",
                     helper_text_mode="on_error",
+                    size_hint=(.3, None),
                     id="number_field",
                 ),
                 spacing="12dp",

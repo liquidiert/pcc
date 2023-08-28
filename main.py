@@ -51,7 +51,7 @@ class PccApp(MDApp):
                         icon="file-document-multiple",
                     ),
                     MDNavigationRailItem(
-                        text="Dates",
+                        text="Events",
                         icon="calendar-range",
                     ),
                     id="navigation_rail",
@@ -65,7 +65,7 @@ class PccApp(MDApp):
                     self.add_relations_screen.build(self.theme_cls),
                     self.documents_screen.build(),
                     self.dates_screen.build(),
-                    self.manage_date_screen.build(),
+                    self.manage_date_screen.build(self.theme_cls),
                     id="screen_manager_content",
                 ),
                 id="root_box",
@@ -94,8 +94,8 @@ class PccApp(MDApp):
         self.relations_screen.init(self.root, self.add_relations_screen)
         self.add_relations_screen.init(self.root)
         self.documents_screen.init(self.root)
-        self.dates_screen.init(self.root)
-        self.manage_date_screen.init(self.root)
+        self.dates_screen.init(self.root, self.manage_date_screen)
+        self.manage_date_screen.init(self.root, self.dates_screen)
 
 if __name__=="__main__":
     client_box = objectbox.Box(ob, Client)

@@ -1,8 +1,5 @@
-from kivy.properties import StringProperty
-from kivy.event import EventDispatcher
-
-class CurrentDateStore(EventDispatcher):
-    current_date = StringProperty(None, allownone=True)
+class CurrentDateStore():
+    current_date = None
 
     @property
     def has_date(self):
