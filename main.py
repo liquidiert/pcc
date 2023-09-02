@@ -22,6 +22,8 @@ import objectbox
 from objectbox_handler import ob
 from models.client import Client
 
+import os
+
 class PccApp(MDApp):
 
     client_screen = ClientScreen()
@@ -84,6 +86,10 @@ class PccApp(MDApp):
         screen_manager_content.current = instance_navigation_rail_item.text.lower()
 
     def on_start(self):
+
+        if not os.path.isdir(os.path.expanduser("~/.pcc")):
+            os.makedirs(os.path.expanduser("~/.pcc"))
+
         root_box = self.root.ids.root_box
         navigation_rail = root_box.ids.navigation_rail
         screen_manager_content = root_box.ids.screen_manager_content
@@ -96,7 +102,7 @@ class PccApp(MDApp):
 
         self.relations_screen.init(self.root, self.add_relations_screen)
         self.add_relations_screen.init(self.root)
-        self.documents_screen.init(self.root)
+        self.documents_screen.init(self.root, self.manage_documents_screen)
         self.manage_documents_screen.init(self.root)
         self.dates_screen.init(self.root, self.manage_date_screen)
         self.manage_date_screen.init(self.root, self.dates_screen)

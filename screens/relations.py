@@ -21,7 +21,7 @@ class RelationsScreen:
         self.root = root
         self.add_screen = sub_screen
 
-    def build(self):
+    def build(self) -> MDScreen:
         self.clients: list[Client] = self.client_box.get_all()
 
         to_display = map(

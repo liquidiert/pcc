@@ -9,7 +9,6 @@ from kivymd.uix.dialog import MDDialog
 
 import objectbox
 from models.relation import Relation
-from models.client import Client
 from objectbox_handler import ob
 
 from typing import Callable
@@ -30,7 +29,7 @@ class AddRelationsScreen:
     def init(self, root):
         self.root = root
 
-    def build(self, theme):
+    def build(self, theme) -> MDScreen:
 
         self.theme_cls = theme
 
@@ -76,8 +75,6 @@ class AddRelationsScreen:
     def refresh(self):
         self.relations: list[Relation] = self.relations_box.get_all()
 
-
-
         self.relations = filter(lambda r: r.client_id == CurrentClientStore.current_client.id, self.relations)
 
         self.to_display = map(
@@ -86,11 +83,6 @@ class AddRelationsScreen:
         )
 
         self.data_table.row_data = self.to_display
-
-    def go_back(self, _):
-        root_box = self.root.ids.root_box
-        screen_manager_content = root_box.ids.screen_manager_content
-        screen_manager_content.current = "relations"
 
     def on_relation_click(self, _, instance_row):
         # get index of row to extract relation id
@@ -378,3 +370,8 @@ class AddRelationsScreen:
             street_field,
             number_field,
         )
+    
+    def go_back(self, _):
+        root_box = self.root.ids.root_box
+        screen_manager_content = root_box.ids.screen_manager_content
+        screen_manager_content.current = "relations"

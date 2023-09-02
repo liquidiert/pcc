@@ -30,7 +30,7 @@ class ManageEventsScreen:
         self.root = root
         self.parent = parent_screen
 
-    def build(self, theme):
+    def build(self, theme) -> MDScreen:
 
         self.theme_cls = theme
 

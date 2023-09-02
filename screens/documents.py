@@ -16,11 +16,13 @@ class DocumentsScreen:
     root = None
     client_box = objectbox.Box(ob, Client)
     data_table = None
+    manage_documents_screen = None
 
-    def init(self, root):
+    def init(self, root, sub_screen):
         self.root = root
+        self.manage_documents_screen = sub_screen
 
-    def build(self):
+    def build(self) -> MDScreen:
         self.clients: list[Client] = self.client_box.get_all()
 
         to_display = map(
@@ -65,5 +67,8 @@ class DocumentsScreen:
         client_id = int(instance_row.table.recycle_data[start_indx]["text"])
 
         CurrentClientStore.current_client = self.client_box.get(client_id)
+
+        self.manage_documents_screen.init_files()
+        self.manage_documents_screen.refresh()
 
         screen_manager_content.current = "manage_documents"

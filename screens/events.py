@@ -29,7 +29,7 @@ class EventsScreen:
         self.root = root
         self.manage_screen = sub_screen
 
-    def build(self):
+    def build(self) -> MDScreen:
         current_days = calendar.monthrange(self.current_date.year, self.current_date.month)
 
         to_display = self.build_day_cards(current_days[1])
@@ -161,4 +161,4 @@ class EventsScreen:
     def set_current_date_label(self):
         root_box = self.root.ids.root_box
         screen_manager_content = root_box.ids.screen_manager_content
-        screen_manager_content.get_screen("dates").ids.dates_box.ids.date_select_box.ids.current_date_range.text = f"{self.current_date.month}-{self.current_date.year}"
+        screen_manager_content.get_screen("events").ids.events_box.ids.date_select_box.ids.current_date_range.text = f"{self.current_date.month}-{self.current_date.year}"

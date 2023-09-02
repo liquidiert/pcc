@@ -17,6 +17,7 @@ from datetime import date, datetime
 
 
 class ClientScreen:
+
     clients = []
     edit_dialog = None
     add_dialog = None
@@ -27,7 +28,7 @@ class ClientScreen:
     birthdate_err = None
     data_table = None
 
-    def build(self, theme):
+    def build(self, theme) -> MDScreen:
         self.theme_cls = theme
 
         self.clients: list[Client] = self.client_box.get_all()
