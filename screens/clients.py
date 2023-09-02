@@ -6,6 +6,7 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.button import MDTextButton, MDFlatButton, MDFloatingActionButton
+from kivymd.uix.snackbar import MDSnackbar
 from kivy.metrics import dp
 
 import objectbox
@@ -386,6 +387,14 @@ class ClientScreen:
             self.client_box.put(self.client_to_edit)
             self.close_client_edit(None)
 
+        MDSnackbar(
+            MDLabel(
+                text="Successfully saved client!"
+            ),
+            size_hint_x=0.4,
+            pos=(dp(12), dp(12)),
+        ).open()
+
         self.refresh()
 
     # delete functions
@@ -393,6 +402,14 @@ class ClientScreen:
         self.client_box.remove(self.client_to_edit)
 
         self.close_client_edit(None)
+
+        MDSnackbar(
+            MDLabel(
+                text="Client deleted successfully!"
+            ),
+            size_hint_x=0.4,
+            pos=(dp(12), dp(12)),
+        ).open()
 
         self.refresh()
 

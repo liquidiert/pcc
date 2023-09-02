@@ -1,11 +1,12 @@
 from kivy.metrics import dp
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.button import MDIconButton, MDFloatingActionButton, MDTextButton, MDFlatButton
+from kivymd.uix.button import MDIconButton, MDFloatingActionButton, MDFlatButton
 from kivymd.uix.label import MDLabel
 from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.dialog import MDDialog
+from kivymd.uix.snackbar import MDSnackbar
 
 import objectbox
 from models.relation import Relation
@@ -338,6 +339,14 @@ class AddRelationsScreen:
             self.relations_box.put(self.relation_to_edit)
             self.close_relation_edit(None)
 
+        MDSnackbar(
+            MDLabel(
+                text="Relation successfully saved!"
+            ),
+            size_hint_x=0.7,
+            pos=(dp(12), dp(12)),
+        ).open()
+
         self.refresh()
 
     # delete function
@@ -345,6 +354,14 @@ class AddRelationsScreen:
         self.relations_box.remove(self.relation_to_edit)
 
         self.close_relation_edit(None)
+
+        MDSnackbar(
+            MDLabel(
+                text="Relation successfully delted!"
+            ),
+            size_hint_x=0.7,
+            pos=(dp(12), dp(12)),
+        ).open()
 
         self.refresh()
     

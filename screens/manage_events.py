@@ -6,6 +6,7 @@ from kivymd.uix.textfield import MDTextField
 from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.button import MDIconButton, MDFloatingActionButton, MDFlatButton
 from kivymd.uix.dialog import MDDialog
+from kivymd.uix.snackbar import MDSnackbar
 
 import objectbox
 from models.date import Date
@@ -216,6 +217,14 @@ class ManageEventsScreen:
             self.events_box.put(self.date_to_edit)
 
             self.close_date_edit(None)
+
+        MDSnackbar(
+            MDLabel(
+                text="Event successfully saved!"
+            ),
+            size_hint_x=0.7,
+            pos=(dp(12), dp(12)),
+        ).open()
         
         self.refresh()
         self.parent.refresh()
