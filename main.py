@@ -31,8 +31,8 @@ class PccApp(MDApp):
     add_relations_screen = AddRelationsScreen()
     documents_screen = DocumentsScreen()
     manage_documents_screen = ManageDocumentsScreen()
-    dates_screen = EventsScreen()
-    manage_date_screen = ManageEventsScreen()
+    events_screen = EventsScreen()
+    manage_events_screen = ManageEventsScreen()
 
     def build(self):
         self.theme_cls.material_style = "M3"
@@ -69,8 +69,8 @@ class PccApp(MDApp):
                     self.add_relations_screen.build(self.theme_cls),
                     self.documents_screen.build(),
                     self.manage_documents_screen.build(),
-                    self.dates_screen.build(),
-                    self.manage_date_screen.build(self.theme_cls),
+                    self.events_screen.build(),
+                    self.manage_events_screen.build(self.theme_cls),
                     id="screen_manager_content",
                 ),
                 id="root_box",
@@ -104,8 +104,8 @@ class PccApp(MDApp):
         self.add_relations_screen.init(self.root)
         self.documents_screen.init(self.root, self.manage_documents_screen)
         self.manage_documents_screen.init(self.root)
-        self.dates_screen.init(self.root, self.manage_date_screen)
-        self.manage_date_screen.init(self.root, self.dates_screen)
+        self.events_screen.init(self.root, self.manage_events_screen)
+        self.manage_events_screen.init(self.root, self.events_screen)
 
 if __name__=="__main__":
     client_box = objectbox.Box(ob, Client)
