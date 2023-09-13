@@ -19,7 +19,7 @@ from store.current_client import CurrentClientStore
 
 class ManageDocumentsScreen:
     root = None
-    before_slash_regex = re.compile(r"/([^/]+)$")
+    before_slash_regex = re.compile(r"(?<=\\)[^\\]+$") if sys.platform == "win32" else re.compile(r"/([^/]+)$")
     file_list = None
 
     def init(self, root):
@@ -74,6 +74,9 @@ class ManageDocumentsScreen:
         chooser = plyer.filechooser
         files = chooser.open_file()
 
+        if len(files) == 0:
+            return
+
         filename = self.before_slash_regex.findall(files[0])[0]
 
         # copy selected file to client directory
@@ -97,7 +100,7 @@ class ManageDocumentsScreen:
             f"~/.pcc/{CurrentClientStore.current_client.fullname}"
         )
         if sys.platform == "win32":
-            subprocess.Popen(["start", client_path], shell=True)
+            os.startfile(client_path)
 
         elif sys.platform == "darwin":
             subprocess.Popen(["open", client_path])
