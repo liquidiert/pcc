@@ -1,0 +1,98 @@
+@startuml class_diagram
+class PccApp {
+  ClientScreen client_screen
+  RelationsScreen relations_screen
+  AddRelationsScreen add_relations_screen
+  DocumentsScreen documents_screen
+  ManageDocumentsScreen manage_documents_screen
+  EventsScreen events_screen
+  ManageEventsScreen manage_events_screen
+}
+
+package Screens {
+  class ClientScreen
+  class RelationsScreen
+  class AddRelationsScreen
+  class DocumentsScreen
+  class ManageDocumentsScreen
+  class EventsScreen
+  class ManageEventsScreen
+
+  PccApp -- ClientScreen : > manages
+  PccApp -- RelationsScreen : > manages
+  PccApp -- DocumentsScreen : > manages
+  PccApp -- EventsScreen : > manages
+
+  RelationsScreen -- AddRelationsScreen : > opens
+  DocumentsScreen -- ManageDocumentsScreen : > opens
+  EventsScreen -- ManageEventsScreen : > opens
+  ManageEventsScreen -- EventsScreen: > refreshes
+
+  hide members
+}
+
+note "Stores are used my multiple classes\nto persist state between screens." as N1
+
+N1 .. Store
+
+package Store {
+  class CurrentClientStore {
+      Observable current_client
+  }
+  class CurrentDateStore {
+      String current_date
+  }
+
+  hide methods
+}
+
+package Models <<Database>> {
+  class Client {
+    Id id
+    String firstname
+    String lastname
+
+    String country
+    String city
+    String zip
+    String street
+    String number
+
+    Int birthdate
+
+    String address
+
+    String fullname
+
+    String human_readable_birthdate
+  }
+
+  class Relation {
+    Id id
+    Id client_id
+    String firstname
+    String lastname
+
+    String country
+    String city
+    String zip
+    String street
+    String number
+
+    String address
+
+    String fullname
+  }
+
+  Client --* Relation
+
+  class Date {
+    Id id
+    String title
+    String notes
+    String date
+  }
+
+  hide methods
+}
+@enduml
