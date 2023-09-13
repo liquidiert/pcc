@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/liquidiert/pcc/compare/v1.0.0...v1.0.1) (2023-09-13)
+
+
+### Bug Fixes
+
+* fixed some windows related problems with file choosers ([e07771d](https://github.com/liquidiert/pcc/commit/e07771dd43507368431a59180b1352515c0d20c3))
+
 ## [1.0.0](https://github.com/liquidiert/pcc/compare/v0.3.0...v1.0.0) (2023-09-02)
 
 
