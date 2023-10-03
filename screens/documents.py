@@ -58,6 +58,16 @@ class DocumentsScreen:
             ),
             name="documents",
         )
+    
+    def refresh(self):
+        self.clients: list[Client] = self.client_box.get_all()
+
+        to_display = map(
+            lambda c: (c.id, c.fullname),
+            self.clients,
+        )
+
+        self.data_table.row_data = to_display
 
     def on_client_click(self, _, instance_row):
         root_box = self.root.ids.root_box
