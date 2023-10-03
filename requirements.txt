@@ -9,7 +9,7 @@ flatbuffers==23.5.26
 idna==3.4
 Kivy==2.2.1
 Kivy-Garden==0.1.5
-kivymd @ https://github.com/kivymd/KivyMD/archive/master.zip
+kivymd @ https://github.com/liquidiert/KivyMD/archive/master.zip
 materialyoucolor==1.2.0
 mypy-extensions==1.0.0
 numpy==1.25.2

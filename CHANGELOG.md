@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.3](https://github.com/liquidiert/pcc/compare/v1.0.2...v1.0.3) (2023-10-03)
+
+
+### Bug Fixes
+
+* updated dependency to forked version of KivyMD with textfield fix ([0a6b117](https://github.com/liquidiert/pcc/commit/0a6b117f3ce31ab7750b4d105b6036f3c4d0d193))
+
+### [1.0.2](https://github.com/liquidiert/pcc/compare/v1.0.1...v1.0.2) (2023-10-03)
+
+
+### Features
+
+* fixed client loading in different sub pages ([a1e6cda](https://github.com/liquidiert/pcc/commit/a1e6cdab4440e5844bbe7ec639f11c4832da9d7e))
+
+
+### Bug Fixes
+
+* fixed some windows related problems with file choosers ([e07771d](https://github.com/liquidiert/pcc/commit/e07771dd43507368431a59180b1352515c0d20c3))
+
 ### [1.0.1](https://github.com/liquidiert/pcc/compare/v1.0.0...v1.0.1) (2023-09-13)
 
 

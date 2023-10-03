@@ -28,9 +28,11 @@ class ClientScreen:
     new_birthdate = None
     birthdate_err = None
     data_table = None
+    parent_refresh = None
 
-    def build(self, theme) -> MDScreen:
+    def build(self, theme, parent_refresh) -> MDScreen:
         self.theme_cls = theme
+        self.parent_refresh = parent_refresh
 
         self.clients: list[Client] = self.client_box.get_all()
 
@@ -396,6 +398,7 @@ class ClientScreen:
         ).open()
 
         self.refresh()
+        self.parent_refresh()
 
     # delete functions
     def delete_client(self, _):
@@ -412,6 +415,7 @@ class ClientScreen:
         ).open()
 
         self.refresh()
+        self.parent_refresh()
 
     # helpers
     def get_client_fields(self, dialog: MDDialog):

@@ -64,7 +64,7 @@ class PccApp(MDApp):
                     ripple_color_item="#e7e4c0",
                 ),
                 MDScreenManager(
-                    self.client_screen.build(self.theme_cls),
+                    self.client_screen.build(self.theme_cls, self.refresh),
                     self.relations_screen.build(),
                     self.add_relations_screen.build(self.theme_cls),
                     self.documents_screen.build(),
@@ -84,6 +84,10 @@ class PccApp(MDApp):
 
         _, instance_navigation_rail_item = args
         screen_manager_content.current = instance_navigation_rail_item.text.lower()
+
+    def refresh(self):
+        self.relations_screen.refresh()
+        self.documents_screen.refresh()
 
     def on_start(self):
 

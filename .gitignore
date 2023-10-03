@@ -178,3 +178,4 @@ pyrightconfig.json
 node_modules
 db
 out
+objectbox.dll
