@@ -4,6 +4,7 @@ from objectbox.model import *
 class Relation:
     id = Id(id=1, uid=2001)
     client_id = Property(int, id=2, uid=2002)
+    type = Property(str, id=10, uid=2010)
     firstname = Property(str, id=3, uid=2003)
     lastname = Property(str, id=4, uid=2004)
     
