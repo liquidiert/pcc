@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/liquidiert/pcc/compare/v1.0.3...v1.1.0) (2023-10-09)
+
+
+### Features
+
+* relation type and doc delete ([07d7c42](https://github.com/liquidiert/pcc/commit/07d7c4217d2cc2af393784a93a475adf20ccdfa8))
+
 ### [1.0.3](https://github.com/liquidiert/pcc/compare/v1.0.2...v1.0.3) (2023-10-03)
 
 
