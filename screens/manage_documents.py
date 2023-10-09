@@ -5,7 +5,7 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDRaisedButton, MDIconButton, MDTextButton
 from kivymd.uix.snackbar import MDSnackbar
 from kivymd.uix.scrollview import MDScrollView
-from kivymd.uix.list import MDList, OneLineListItem
+from kivymd.uix.list import MDList, OneLineAvatarIconListItem, IconRightWidget
 
 import plyer
 import os
@@ -13,13 +13,18 @@ import sys
 import re
 import subprocess
 import shutil
+from functools import partial
 
 from store.current_client import CurrentClientStore
 
 
 class ManageDocumentsScreen:
     root = None
-    before_slash_regex = re.compile(r"(?<=\\)[^\\]+$") if sys.platform == "win32" else re.compile(r"/([^/]+)$")
+    before_slash_regex = (
+        re.compile(r"(?<=\\)[^\\]+$")
+        if sys.platform == "win32"
+        else re.compile(r"/([^/]+)$")
+    )
     file_list = None
 
     def init(self, root):
@@ -68,7 +73,9 @@ class ManageDocumentsScreen:
         )
 
         for file in files:
-            self.file_list.add_widget(OneLineListItem(text=file))
+            self.file_list.add_widget(
+                OneLineAvatarIconListItem(IconRightWidget(icon="trash-can", on_press=partial(self.delete_doc, file)), text=file)
+            )
 
     def open_file_upload(self, _):
         chooser = plyer.filechooser
@@ -113,6 +120,11 @@ class ManageDocumentsScreen:
                 # xdg-open *should* be supported by recent Gnome, KDE, Xfce
                 # for now just pass as windows is main platform anyway
                 pass
+
+    def delete_doc(self, file, _):
+        os.remove(os.path.expanduser(f"~/.pcc/{CurrentClientStore.current_client.fullname}/{file}"))
+
+        self.refresh()
 
     def go_back(self, _):
         root_box = self.root.ids.root_box

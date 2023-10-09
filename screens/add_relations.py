@@ -37,7 +37,7 @@ class AddRelationsScreen:
         self.relations: list[Relation] = self.relations_box.get_all()
 
         to_display = map(
-            lambda r: (r.id, r.fullname, r.address),
+            lambda r: (r.id, r.type, r.fullname, r.address),
             self.relations,
         )
 
@@ -46,6 +46,7 @@ class AddRelationsScreen:
             use_pagination=True,
             column_data=[
                 ("Id", dp(20)),
+                ("Type", dp(30)),
                 ("Name", dp(40)),
                 ("Address", dp(100))
             ],
@@ -79,7 +80,7 @@ class AddRelationsScreen:
         self.relations = filter(lambda r: r.client_id == CurrentClientStore.current_client.id, self.relations)
 
         self.to_display = map(
-            lambda c: (c.id, c.fullname, c.address),
+            lambda c: (c.id, c.type, c.fullname, c.address),
             self.relations,
         )
 
@@ -105,6 +106,7 @@ class AddRelationsScreen:
 
             # get field references
             (
+                type_field,
                 firstname_field,
                 lastname_field,
                 country_field,
@@ -115,6 +117,7 @@ class AddRelationsScreen:
             ) = self.get_relation_fields(self.edit_dialog)
 
             # set to edit text
+            type_field.text = self.relation_to_edit.type
             firstname_field.text = self.relation_to_edit.firstname
             lastname_field.text = self.relation_to_edit.lastname
             country_field.text = self.relation_to_edit.country
@@ -140,6 +143,12 @@ class AddRelationsScreen:
     # dialog build functions
     def build_dialog_content(self) -> MDBoxLayout:
         return MDBoxLayout(
+            MDTextField(
+                hint_text="Type of relation",
+                write_tab=False,
+                multiline=False,
+                id="type_field",
+            ),
             MDTextField(
                 hint_text="Firstname",
                 required=True if self.relation_to_edit else False,
@@ -267,6 +276,7 @@ class AddRelationsScreen:
         if not self.relation_to_edit:  # add new relation
             # get field references
             (
+                type_field,
                 firstname_field,
                 lastname_field,
                 country_field,
@@ -304,6 +314,7 @@ class AddRelationsScreen:
                 return
 
             new_relation = Relation()
+            new_relation.type = type_field.text
             new_relation.firstname = firstname_field.text
             new_relation.lastname = lastname_field.text
             new_relation.country = country_field.text
@@ -319,6 +330,7 @@ class AddRelationsScreen:
         else:  # save existing relation
             # get field references
             (
+                type_field,
                 firstname_field,
                 lastname_field,
                 country_field,
@@ -328,6 +340,7 @@ class AddRelationsScreen:
                 number_field,
             ) = self.get_relation_fields(self.edit_dialog)
 
+            self.relation_to_edit.type = type_field.text
             self.relation_to_edit.firstname = firstname_field.text
             self.relation_to_edit.lastname = lastname_field.text
             self.relation_to_edit.country = country_field.text
@@ -370,6 +383,7 @@ class AddRelationsScreen:
         """
         Gets all textfields from a dialog as a tuple
         """
+        type_field = dialog.content_cls.ids.type_field
         firstname_field = dialog.content_cls.ids.firstname_field
         lastname_field = dialog.content_cls.ids.lastname_field
         country_field = dialog.content_cls.ids.country_field
@@ -379,6 +393,7 @@ class AddRelationsScreen:
         number_field = dialog.content_cls.ids.street_box.ids.number_field
 
         return (
+            type_field,
             firstname_field,
             lastname_field,
             country_field,
