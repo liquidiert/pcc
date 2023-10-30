@@ -16,16 +16,21 @@ from screens.events import EventsScreen
 from screens.manage_events import ManageEventsScreen
 
 from kivy.core.window import Window
+
 Window.size = (1000, 750)
 
 import objectbox
 from objectbox_handler import ob
 from models.client import Client
+from models.relation import Relation
 
-import os
+import os, configparser
+
+client_box = objectbox.Box(ob, Client)
+relation_box = objectbox.Box(ob, Relation)
+
 
 class PccApp(MDApp):
-
     client_screen = ClientScreen()
     relations_screen = RelationsScreen()
     add_relations_screen = AddRelationsScreen()
@@ -90,10 +95,6 @@ class PccApp(MDApp):
         self.documents_screen.refresh()
 
     def on_start(self):
-
-        if not os.path.isdir(os.path.expanduser("~/.pcc")):
-            os.makedirs(os.path.expanduser("~/.pcc"))
-
         root_box = self.root.ids.root_box
         navigation_rail = root_box.ids.navigation_rail
         screen_manager_content = root_box.ids.screen_manager_content
@@ -111,7 +112,59 @@ class PccApp(MDApp):
         self.events_screen.init(self.root, self.manage_events_screen)
         self.manage_events_screen.init(self.root, self.events_screen)
 
-if __name__=="__main__":
-    client_box = objectbox.Box(ob, Client)
+
+if __name__ == "__main__":
+    app_base_path = os.path.expanduser("~/.pcc")
+
+    if not os.path.isdir(app_base_path):
+        os.makedirs(app_base_path)
+
+    # init objectbox data if user starts application for the first time
+
+    config = None
+
+    if not os.path.exists(f"{app_base_path}/.pcc.ini"):
+        parser = configparser.ConfigParser()
+        parser["DEFAULT"] = {"hasAppOpened": "no"}
+        with open(f"{app_base_path}/.pcc.ini", "w+") as config_file:
+            parser.write(config_file)
+
+        config = parser
+    else:
+        parser = configparser.ConfigParser()
+        parser.readfp(open(f"{app_base_path}/.pcc.ini"))
+
+        config = parser
+
+    if config["DEFAULT"]["hasAppOpened"] == "no":
+        test_client = Client()
+        test_client.firstname = "Korbinian"
+        test_client.lastname = "Habereder"
+        test_client.country = "Deutschland"
+        test_client.zip = "84688"
+        test_client.city = "Teststadt"
+        test_client.street = "Teststraße"
+        test_client.number = "5"
+        test_client.birthdate = 926952165
+
+        client_id = client_box.put(test_client)
+
+        test_relation = Relation()
+        test_relation.type = "Relative"
+        test_relation.firstname = "L"
+        test_relation.lastname = "Habereder"
+        test_relation.country = "Deutschland"
+        test_relation.zip = "84688"
+        test_relation.city = "Teststadt"
+        test_relation.street = "Teststraße"
+        test_relation.number = "5"
+        test_relation.client_id = client_id
+
+        relation_box.put(test_relation)
+
+        with open(f"{app_base_path}/.pcc.ini", "w") as config_file:
+            config["DEFAULT"]["hasAppOpened"] = "yes"
+            print(config)
+            config.write(config_file)
 
     PccApp().run()

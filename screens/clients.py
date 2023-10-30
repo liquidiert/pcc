@@ -11,10 +11,13 @@ from kivy.metrics import dp
 
 import objectbox
 from models.client import Client
+from models.relation import Relation
 from objectbox_handler import ob
 
 from typing import Callable
 from datetime import date, datetime
+
+import os
 
 
 class ClientScreen:
@@ -24,6 +27,7 @@ class ClientScreen:
     add_dialog = None
     theme_cls = None
     client_box = objectbox.Box(ob, Client)
+    relation_box = objectbox.Box(ob, Relation)
     client_to_edit: Client = None  # placeholder for editing clients
     new_birthdate = None
     birthdate_err = None
@@ -403,6 +407,22 @@ class ClientScreen:
     # delete functions
     def delete_client(self, _):
         self.client_box.remove(self.client_to_edit)
+
+        # remove all linked relations
+        relations: list[Relation] = self.relation_box.get_all()
+
+        for r in filter(lambda r: r.id == self.client_to_edit.id, relations):
+            self.relation_box.remove(r)
+
+        # remove any docs
+        client_path = os.path.expanduser(
+            f"~/.pcc/{self.client_to_edit.fullname}"
+        )
+
+        try:
+            os.rmdir(client_path)
+        except:
+            pass  # no dir created yet
 
         self.close_client_edit(None)
 

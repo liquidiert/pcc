@@ -1,0 +1,67 @@
+@startuml manage-user_activity-diagram
+|User|
+start
+:Opens client management page;
+|UI|
+:Shows client management page;
+:Waits for user input;
+|User|
+:Clicks on add client button;
+|UI|
+:Shows client add dialog;
+:Waits for user input;
+|User|
+:Enters client data;
+if (Chooses action) then (clicks cancel)
+    :Aborts add client flow;
+    |UI|
+    :Closes add dialog;
+    stop
+else (clicks save)
+    |Database|
+    :Adds client entry;
+    |UI|
+    :Closes add dialog;
+    :Shows new user in data table;
+endif
+/' edit flow '/
+|User|
+:Clicks on client in data table;
+|UI|
+:Opens client edit dialog;
+:Waits for user input;
+|User|
+:Changes client data;
+if (Chooses action) then (clicks cancel)
+    :Aborts edit client flow;
+    |UI|
+    :Closes edit dialog;
+    stop
+else (clicks save)
+    |Database|
+    :Changes client entry;
+    |UI|
+    :Closes edit dialog;
+    :Shows changed data in data table;
+endif
+/' delete flow '/
+|User|
+:Clicks on client in data table;
+|UI|
+:Opens client edit dialog;
+:Waits for user input;
+|User|
+if (Chooses action) then (clicks cancel)
+    :Aborts delete client flow;
+    |UI|
+    :Closes edit dialog;
+    stop
+else (clicks delete)
+    |Database|
+    :Deletes client entry;
+    |UI|
+    :Closes edit dialog;
+    :No longer shows client in data table;
+    stop
+endif
+@enduml
