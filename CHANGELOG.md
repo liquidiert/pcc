@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/liquidiert/pcc/compare/v1.1.0...v1.2.0) (2023-10-30)
+
+
+### Features
+
+* added diagrams and app optimizations ([6fb9c8d](https://github.com/liquidiert/pcc/commit/6fb9c8dbaf407a8476f89e1f598f74c5f5932f6b))
+
 ## [1.1.0](https://github.com/liquidiert/pcc/compare/v1.0.3...v1.1.0) (2023-10-09)
 
 
