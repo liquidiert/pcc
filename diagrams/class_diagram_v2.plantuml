@@ -1,0 +1,65 @@
+@startuml class_diagram
+class PccApp {
+  ClientScreen client_screen
+  RelationsScreen relations_screen
+  AddRelationsScreen add_relations_screen
+  DocumentsScreen documents_screen
+  ManageDocumentsScreen manage_documents_screen
+  EventsScreen events_screen
+  ManageEventsScreen manage_events_screen
+}
+
+package Screens {
+  class ClientScreen
+  class RelationsScreen
+  class AddRelationsScreen
+  class DocumentsScreen
+  class ManageDocumentsScreen
+  class EventsScreen
+  class ManageEventsScreen
+
+  PccApp -- ClientScreen : > manages
+  PccApp -- RelationsScreen : > manages
+  PccApp -- DocumentsScreen : > manages
+  PccApp -- EventsScreen : > manages
+
+  RelationsScreen -- AddRelationsScreen : > opens
+  DocumentsScreen -- ManageDocumentsScreen : > opens
+  EventsScreen -- ManageEventsScreen : > opens
+  ManageEventsScreen -- EventsScreen: > refreshes
+
+  hide members
+}
+
+note "Stores are used my multiple classes\nto persist state between screens.\nFor readability of this diagram the connections between\nStores and Screens is not being displayed." as N1
+
+N1 .. Store
+
+package Store {
+  class CurrentClientStore {
+      Observable current_client
+  }
+  class CurrentDateStore {
+      String current_date
+  }
+
+  hide methods
+}
+
+package Models <<Database>> {
+  class Client
+
+  class Relation
+
+  Client *-- Relation
+
+  class Date
+
+  hide members
+}
+
+ManageEventsScreen -- Date : Uses <b>Date</b> class for CRUD operations 
+ClientScreen -- Client : Uses <b>Client</b> class for CRUD operations
+AddRelationsScreen -- Relation : Uses <b>Relation</b> class\nfor CRUD operations
+
+@enduml
