@@ -1,0 +1,12 @@
+@startuml add-documents_sequence-diagram
+actor User
+participant PCC 
+actor Organization
+
+User -> PCC : Adds documents in PCC
+PCC --> PCC : Saves documents in\nlocal folder structure
+Organization -> User : Requests documents
+User -> PCC : Indicates read documents from client
+PCC --> User : Opens corresponding folder
+User --> Organization : Hands over required documents
+@enduml
