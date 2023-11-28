@@ -1,13 +1,27 @@
-# pcc
+# PythonClientCare
 
-## How to run
+## Installation
 
-To run first install all required dependencies via:
-```text
+### Prerequisites
+- Python3.12; can be found [here](https://www.python.org/downloads/)
+
+### Installation steps
+1. create new python evironment:
+```shell
 python3 -m venv env
-~activate env here~
-pip install -r requirements.txt
+```
+2. activate environment:
+```shell
+# for linux
+. env/bin/activate
+# for windows
+.\env\bin\Activate.ps1
+```
+3. install requirements:
+```shell
+pip3 install -r requirements.txt
 ```
 
-Then just execute:  
+### Start PCC
+Execute:  
 `python3 main.py`
